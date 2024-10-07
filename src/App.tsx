@@ -18,24 +18,36 @@ function App() {
  // State to store chat messages
  const [chatMessages, setChatMessages] = useState<any>([]);
 
+ const [api, setApi] = useState<string>("");
+
  // Function to handle user messages
  const handleUserMessage = async (userMessage:any) => {
-   // Create a new user message object
-   const newUserMessage = {
-     message: userMessage,
-     sender: "user",
-     direction: "outgoing",
-   };
+    if(api === "") {
+        const newUserMessage = {
+            message: "Вставьте ключ api",
+            sender: "user",
+            direction: "outgoing",
+        };
+        const updatedChatMessages = [...chatMessages, newUserMessage];
+        setChatMessages(updatedChatMessages);
+    }else {
+        // Create a new user message object
+        const newUserMessage = {
+            message: userMessage,
+            sender: "user",
+            direction: "outgoing",
+        };
 
-   // Update chat messages state with the new user message
-   const updatedChatMessages = [...chatMessages, newUserMessage];
-   setChatMessages(updatedChatMessages);
+        // Update chat messages state with the new user message
+        const updatedChatMessages = [...chatMessages, newUserMessage];
+        setChatMessages(updatedChatMessages);
 
-   // Set the typing indicator for the chatbot
-   setIsChatbotTyping(true);
+        // Set the typing indicator for the chatbot
+        setIsChatbotTyping(true);
 
-   // Process user message with ChatGPT
-   await processUserMessageToChatGPT(updatedChatMessages);
+        // Process user message with ChatGPT
+        await processUserMessageToChatGPT(updatedChatMessages);
+    }
  };
 
  // Function to send the user message to ChatGPT API
@@ -94,9 +106,9 @@ function App() {
  }
 
  return (
-   <>
+   <div>
      {/* A container for the chat window */}
-     <div style={{ position: "relative", height: "100vh", width: "700px" }}>
+     <div style={{ position: "relative", height: "70vh", width: "700px" }}>
        <MainContainer>
          <ChatContainer>
            {/* Display chat messages and typing indicator */}
@@ -128,7 +140,8 @@ function App() {
          </ChatContainer>
        </MainContainer>
      </div>
-   </>
+    <input value={api} style={{height: 30, marginTop: 20}} placeholder="АПИ КЛЮЧ" onChange={(e: any) => setApi(e.target.value)} />
+   </div>
  );
 }
 
