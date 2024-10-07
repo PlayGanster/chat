@@ -9,7 +9,7 @@ import {
  TypingIndicator,
 } from "@chatscope/chat-ui-kit-react";
 
-const OPENAI_API_KEY = "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";
+const OPENAI_API_KEY = "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";
 
 function App() {
  // State to manage the typing indicator of the chatbot
